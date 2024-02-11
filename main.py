@@ -1,4 +1,5 @@
 import random
+from typing import Dict, List, Tuple
 
 MAX_LINES = 3
 MAX_BET = 100
@@ -22,7 +23,18 @@ symbol_value = {
 }
 
 
-def check_winnings(columns, lines, bet, values):
+def check_winnings(columns: List[List[str]], lines: int, bet: int, values: Dict[str, int]) -> Tuple[int, List[int]]:
+    """
+    Calculates the total winnings from a slot machine spin.
+    :param columns: (Dict[str, int]) A 2D list where each sublist represents a slot machine column.
+    Each element in a sublist is a string representing a symbol.
+    :param lines: (int) The number of lines to check for winnings.
+    :param bet: (int) The bet amount pre line.
+    :param values: (Dict[str, int]) A dictionary that correlates each symbol with its value (possible winnings)
+    :return:
+    Tuple[int, List[int]]: A tuple containing the total winnings and a list fo the line numbers that won.
+    Line numbers are 1-indexed.
+    """
     winnings = 0
     winnings_lines = []
     for line in range(lines):
@@ -38,7 +50,16 @@ def check_winnings(columns, lines, bet, values):
     return winnings, winnings_lines
 
 
-def get_slot_machine_spin(rows, cols, symbols):
+def get_slot_machine_spin(rows: int, cols: int, symbols: Dict[str, int]) -> List[List[str]]:
+    """
+    Generates a simulated spin of a slot machine.
+    :param rows: (int) The number of rows in the slot machine.
+    :param cols: (int) The number of columns in the slot machine
+    :param symbols: (Dict[str, int]) A dictionary where keys are symbol characters as strings,
+    and values are the counts of how many times each symbol appears.
+    :return:
+    List[List[str]]: A 2D list representing the columns and rows of a slot machine with randomly assigned symbols.
+    """
     all_symbols = []
     for symbol, symbolCount in symbols.items():
         for _ in range(symbolCount):
@@ -58,7 +79,14 @@ def get_slot_machine_spin(rows, cols, symbols):
     return columns
 
 
-def print_slot_machine(columns):
+def print_slot_machine(columns: List[List[str]]) -> None:
+    """
+    Print the slot machine spit result.
+    :param columns: (List[List[str]]) A 2D list where each sublist represents a column in the slot machine.
+    Each element in a sublist is a string representing a symbol.
+    :return:
+    None: This function prints the slot machine layout to the console but returns nothing.
+    """
     for row in range(len(columns[0])):
         for i, column in enumerate(columns):
             if i != len(columns) - 1:
@@ -69,7 +97,12 @@ def print_slot_machine(columns):
         print()
 
 
-def deposit():
+def deposit() -> int:
+    """
+    Prompts the user to deposit a positive integer amount of money.
+    :return:
+    int: The deposit amount entered by the user.
+    """
     while True:
         amount = input("What would you like to deposit? $")
         if amount.isdigit():
@@ -84,7 +117,12 @@ def deposit():
     return amount
 
 
-def get_number_of_lines():
+def get_number_of_lines() -> int:
+    """
+    Prompts the user to enter number of betting lines.
+    :return:
+    int: The number of lines the user wishes to bet on,  validated to be within the range 1 to MAX_LINES.
+    """
     while True:
         lines = input("Enter the number of lines to bet on (1-" + str(MAX_LINES) + ")? ")
         if lines.isdigit():
@@ -99,7 +137,12 @@ def get_number_of_lines():
     return lines
 
 
-def get_bet():
+def get_bet() -> int:
+    """
+    Prompts the user to enter a betting amount pre line.
+    :return:
+    int: The validated betting amount pre line, within the range of MIN_BET to MAX_BET.
+    """
     while True:
         amount = input("What would you like to bet on each line? $")
         if amount.isdigit():
@@ -114,7 +157,13 @@ def get_bet():
     return amount
 
 
-def spin(balance):
+def spin(balance: int) -> int:
+    """
+    Executes a single spin on the slot machine.
+    :param balance: (int) The player's current balance.
+    :return:
+    int: The net change in the player's balance after the spin (winnings minus the total bet).
+    """
     lines = get_number_of_lines()
     while True:
         bet = get_bet()
@@ -135,7 +184,11 @@ def spin(balance):
     return winnings - total_bet
 
 
-def main():
+def main() -> None:
+    """
+    The main function for running the slot machine game.
+    :return:
+    """
     balance = deposit()
     while True:
         print(f"Current balance is ${balance}")
@@ -150,8 +203,5 @@ def main():
 main()
 
 
-# TODO: write comments
-# TODO: write annotations
 # TODO: write tests
 # TODO: write README
-# TODO: git
