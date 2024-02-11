@@ -200,8 +200,8 @@ def main() -> None:
     print(f"You left with ${balance}.")
 
 
-main()
+if __name__ == "__main__":
+    main()
 
 
-# TODO: write tests
 # TODO: write README
