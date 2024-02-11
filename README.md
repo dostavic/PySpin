@@ -1,1 +1,1 @@
-# PySpinCasino
+# PySpin
